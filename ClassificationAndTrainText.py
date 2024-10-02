@@ -8,7 +8,7 @@ import numpy as np
 # Define regex patterns and status/reason texts
 texts = [
     r"MFI-\d+", r"GFD-\d+", r"AMFD-\d+",  # Number of Weight patterns
-    "nnj", "weight2", "post g",  # Status
+    "nnj", "وزنة", "post",  # Status
     "damaged", "delayed", "xyz"  # Reason
 ]
 
@@ -27,13 +27,14 @@ sequences = tokenizer.texts_to_sequences(texts)
 max_length = max(len(seq) for seq in sequences)
 
 print(word_index)
-print(sequences)
 print(max_length)
 
-padded_sequences = pad_sequences(sequences, maxlen=max_length)
+print(sequences)
+print(len(word_index))
 
+padded_sequences = pad_sequences(sequences,truncating= 'post', maxlen=max_length)
 print(padded_sequences)
-#""""
+
 
 # Define a simple classification model
 model = Sequential([
@@ -41,7 +42,9 @@ model = Sequential([
     LSTM(32),
     Dense(3, activation='softmax')  # 3 classes: Number of Weight, Status, Reason
 ])
+model.summary()
 
+#"""
 # Compile the model
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
@@ -89,7 +92,7 @@ def detect_and_classify(input_str):
     return custom_variables
 
 # Example usage
-str_input = "AMFD-000113811 post g received123"
+str_input = "وزنة MFI-000113811 xyz"
 result = detect_and_classify(str_input)
 print(result)
 

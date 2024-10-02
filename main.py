@@ -21,7 +21,7 @@ sequences = tokenizer.texts_to_sequences(sentence)
 test_data = ['i really love my dog','my dog loves my manatee']
 test_seq = tokenizer.texts_to_sequences(test_data)
 
-padded = pad_sequences(sequences,padding='post',maxlen=5, truncating= 'post')
+padded = pad_sequences(sequences,padding='pre',maxlen=5, truncating= 'post')
 
 
 print(word_index)
